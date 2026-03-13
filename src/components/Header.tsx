@@ -2,11 +2,20 @@ import { useState } from 'react';
 import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
-export default function Header() {
+interface HeaderProps {
+  onNavigateHome?: (id: string) => void;
+}
+
+export default function Header({ onNavigateHome }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isDark, toggle } = useTheme();
 
   const scrollToSection = (id: string) => {
+    if (onNavigateHome) {
+      onNavigateHome(id);
+      setIsMenuOpen(false);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -18,11 +18,11 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-hero-lg xl:text-hero-xl text-text-primary font-bold mb-6 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-hero-lg xl:text-hero-xl dark:text-text-primary text-text-light font-bold mb-6 tracking-tight">
           IMMERSE YOURSELF IN
           <span className="block text-gold mt-2">ADVENTURE</span>
         </h1>
-        <p className="text-text-secondary text-lg sm:text-xl md:text-2xl mb-12 max-w-3xl mx-auto">
+        <p className="dark:text-text-secondary text-text-light-secondary text-lg sm:text-xl md:text-2xl mb-12 max-w-3xl mx-auto">
           Experience the raw beauty of Africa's wilderness with expertly curated safaris and unforgettable journeys
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

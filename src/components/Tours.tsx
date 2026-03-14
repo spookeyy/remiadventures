@@ -27,7 +27,7 @@ const tours: Tour[] = [
     price: 'KES 1,938',
     priceValue: 1938,
     originalPrice: 1938,
-    image: 'https://images.pexels.com/photos/1102417/pexels-photo-1102417.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: 'https://images.pexels.com/photos/1615808/pexels-photo-1615808.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'Glide through mangroves at golden hour, spotting birds and listening to the river come alive at dusk.',
     highlights: ['Traditional canoe ride', 'Sunset views', 'Birdlife spotting', 'Calm, guided experience', 'Photo moments'],
     included: ['Canoe ride', 'Local guide', 'Safety gear', 'Entry fees', 'Refreshments'],

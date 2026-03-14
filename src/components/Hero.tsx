@@ -1,23 +1,47 @@
 import { useEffect, useState } from 'react';
 
+const heroBackgrounds = [
+  {
+    image: '/Kenya-safari-guide.jpg',
+  },
+  {
+    image: '/kenyan_walking_safari.1340x0_default_1-1.jpg',
+  },
+  {
+    image: '/game-drive-vehicle-elephant-herd-kenya-safari-tour-.jpg',
+  },
+];
+
 const heroSlides = [
   {
     title: 'Coastal Weekend Offer',
     subtitle: 'Beach stays + SGR transfers for easy, stress-free travel.',
     badge: 'Limited Offer',
-    image: 'https://images.pexels.com/photos/1154619/pexels-photo-1154619.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    image: 'https://images.pexels.com/photos/4577793/pexels-photo-4577793.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
-    title: 'Sunset River Cruise',
-    subtitle: 'Quiet waters, golden skies, and a guided canoe experience.',
-    badge: 'New Experience',
-    image: 'https://images.pexels.com/photos/221471/pexels-photo-221471.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    title: 'Safari Game Drive',
+    subtitle: 'Get close to wildlife with experienced local guides.',
+    badge: 'Popular',
+    image: 'https://images.pexels.com/photos/196427/pexels-photo-196427.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
-    title: 'Family Ocean Day',
-    subtitle: 'Snorkeling, dolphins, and a seaside lunch on Wasini Island.',
-    badge: 'Family Friendly',
-    image: 'https://images.pexels.com/photos/260803/pexels-photo-260803.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    title: 'Lion Country Views',
+    subtitle: 'Quiet moments with big cats and golden horizons.',
+    badge: 'Wildlife',
+    image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+  {
+    title: 'Elephants on the Move',
+    subtitle: 'A front-row seat to Kenya’s iconic herds.',
+    badge: 'Signature',
+    image: 'https://images.pexels.com/photos/66898/elephant-cub-tsavo-kenya-66898.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+  {
+    title: 'Giraffe Encounters',
+    subtitle: 'Slow travel, big skies, and graceful wildlife.',
+    badge: 'Nature',
+    image: 'https://images.pexels.com/photos/259554/pexels-photo-259554.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
 ];
 
@@ -43,10 +67,10 @@ export default function Hero() {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/3714898/pexels-photo-3714898.jpeg?auto=compress&cs=tinysrgb&w=1920")',
+          backgroundImage: `url("${heroBackgrounds[activeSlide % heroBackgrounds.length].image}")`,
         }}
       >
-        <div className="absolute inset-0 dark:bg-gradient-dark bg-gradient-light"></div>
+        <div className="absolute inset-0 dark:bg-gradient-dark/70 bg-gradient-light/60"></div>
       </div>
 
       <div className="relative z-10 px-4 max-w-6xl mx-auto w-full">

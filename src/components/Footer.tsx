@@ -56,8 +56,8 @@ export default function Footer() {
               <li className="flex items-start gap-2 text-text-secondary">
                 <Mail size={20} className="text-gold flex-shrink-0 mt-1" />
                 <div>
-                  <a href="mailto:info@remiadventures.com" className="hover:text-gold transition-colors">
-                    info@remiadventures.com
+                  <a href="mailto:reservation.remiadventures@gmail.com" className="hover:text-gold transition-colors">
+                    reservation.remiadventures@gmail.com
                   </a>
                 </div>
               </li>

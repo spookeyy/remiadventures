@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { X, Send, Info } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { X, Send, Info, Mail } from 'lucide-react';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -11,6 +11,7 @@ interface BookingModalProps {
 }
 
 export default function BookingModal({ isOpen, onClose, tour }: BookingModalProps) {
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,8 +21,10 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
     paymentType: 'deposit',
     specialRequests: '',
   });
+  const [isEmailSending, setIsEmailSending] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleWhatsappSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const depositAmount = formData.paymentType === 'deposit' ? '30% minimum deposit' : 'Full payment upfront';
@@ -54,6 +57,81 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
     });
   };
 
+  const handleEmailSubmit = async () => {
+    setEmailStatus('idle');
+    if (!formRef.current?.reportValidity()) return;
+
+    setIsEmailSending(true);
+    try {
+      const response = await fetch('/api/send-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'booking',
+          tourTitle: tour.title,
+          price: tour.price,
+          customer: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            date: formData.date,
+            guests: formData.guests,
+          },
+          details: {
+            paymentType: formData.paymentType === 'deposit' ? '30% Deposit' : 'Full Payment',
+            specialRequests: formData.specialRequests,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      setEmailStatus('success');
+      onClose();
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        guests: '1',
+        paymentType: 'deposit',
+        specialRequests: '',
+      });
+    } catch {
+      setEmailStatus('error');
+    } finally {
+      setIsEmailSending(false);
+    }
+  };
+
+  const buildMailtoLink = () => {
+    const subject = `Booking Request: ${tour.title}`;
+    const body = [
+      'NEW BOOKING REQUEST',
+      '',
+      `Tour: ${tour.title}`,
+      `Price: ${tour.price}`,
+      '',
+      'Customer Details:',
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Phone: ${formData.phone}`,
+      `Preferred Date: ${formData.date}`,
+      `Number of Guests: ${formData.guests}`,
+      '',
+      `Payment: ${formData.paymentType === 'deposit' ? '30% Deposit' : 'Full Payment'}`,
+      formData.specialRequests ? `Special Requests: ${formData.specialRequests}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    return `mailto:reservation.remiadventures@gmail.com?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -83,7 +161,7 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleWhatsappSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block dark:text-text-secondary text-text-light-secondary mb-2 uppercase text-sm tracking-wide">Full Name *</label>
@@ -171,13 +249,38 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full dark:bg-white dark:text-dark dark:hover:bg-light bg-dark text-white hover:bg-text-light px-8 py-4 font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <Send size={20} />
-              SEND TO WHATSAPP
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                type="submit"
+                className="flex-1 dark:bg-white dark:text-dark dark:hover:bg-light bg-dark text-white hover:bg-text-light px-8 py-4 font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Send size={20} />
+                SEND VIA WHATSAPP
+              </button>
+              <button
+                type="button"
+                onClick={handleEmailSubmit}
+                className="flex-1 border border-text-light dark:border-white dark:text-white text-text-light hover:bg-text-light hover:text-white dark:hover:bg-white dark:hover:text-dark px-8 py-4 font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
+                disabled={isEmailSending}
+              >
+                <Mail size={20} />
+                {isEmailSending ? 'SENDING EMAIL...' : 'SEND VIA EMAIL'}
+              </button>
+            </div>
+            {emailStatus === 'success' && (
+              <p className="text-sm text-emerald-600 dark:text-emerald-400">Email sent. We will get back shortly.</p>
+            )}
+            {emailStatus === 'error' && (
+              <div className="text-sm text-red-600 dark:text-red-400 space-y-2">
+                <p>Email failed. Please try again, use WhatsApp, or send via email client.</p>
+                <a
+                  href={buildMailtoLink()}
+                  className="inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4 dark:text-white text-text-light"
+                >
+                  Open email draft
+                </a>
+              </div>
+            )}
           </form>
         </div>
       </div>

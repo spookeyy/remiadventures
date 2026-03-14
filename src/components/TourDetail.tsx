@@ -109,10 +109,12 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
                 </h3>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center pb-4 border-b dark:border-white/10 border-black/10">
-                    <span className="dark:text-text-secondary text-text-light-secondary">Original Price (per person)</span>
-                    <span className="dark:text-text-muted text-text-light-muted line-through">KES {tour.originalPrice.toLocaleString()}</span>
-                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between items-center pb-4 border-b dark:border-white/10 border-black/10">
+                      <span className="dark:text-text-secondary text-text-light-secondary">Original Price (per person)</span>
+                      <span className="dark:text-text-muted text-text-light-muted line-through">KES {tour.originalPrice.toLocaleString()}</span>
+                    </div>
+                  )}
 
                   <div className="flex justify-between items-center pb-4 border-b dark:border-white/10 border-black/10">
                     <span className="dark:text-text-secondary text-text-light-secondary">Current Price (per person)</span>

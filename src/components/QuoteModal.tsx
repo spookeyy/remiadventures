@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { X, Send, Mail } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -83,6 +84,7 @@ export default function QuoteModal({ isOpen, onClose, tour }: QuoteModalProps) {
       }
 
       setEmailStatus('success');
+      toast.success('Email sent successfully.');
       onClose();
       setFormData({
         name: '',
@@ -94,6 +96,7 @@ export default function QuoteModal({ isOpen, onClose, tour }: QuoteModalProps) {
       });
     } catch {
       setEmailStatus('error');
+      toast.error('Email failed. Try again or use WhatsApp.');
     } finally {
       setIsEmailSending(false);
     }

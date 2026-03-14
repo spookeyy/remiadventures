@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { X, Send, Info, Mail } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -89,6 +90,7 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
       }
 
       setEmailStatus('success');
+      toast.success('Email sent successfully.');
       onClose();
       setFormData({
         name: '',
@@ -101,6 +103,7 @@ export default function BookingModal({ isOpen, onClose, tour }: BookingModalProp
       });
     } catch {
       setEmailStatus('error');
+      toast.error('Email failed. Try again or use WhatsApp.');
     } finally {
       setIsEmailSending(false);
     }

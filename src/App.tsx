@@ -7,6 +7,7 @@ import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import type { Tour } from './types/tour';
+import { Toaster } from 'sonner';
 
 function App() {
   const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <div className="min-h-screen dark:bg-dark bg-light transition-colors duration-300">
+      <Toaster position="top-right" richColors />
       <Header onNavigateHome={handleNavRequest} />
       {selectedTour ? (
         <>

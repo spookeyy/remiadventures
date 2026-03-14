@@ -143,7 +143,7 @@ export default async function handler(req: any, res: any) {
     await resend.emails.send({
       from: fromAddress,
       to: toAddress,
-      replyTo: payload.customer.email,
+      reply_to: payload.customer.email,
       subject,
       html: buildHtml(payload),
       text: buildText(payload),

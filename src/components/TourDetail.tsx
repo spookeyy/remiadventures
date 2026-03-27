@@ -14,8 +14,6 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const discount = Math.round(((tour.originalPrice - tour.priceValue) / tour.originalPrice) * 100);
-
   return (
     <>
       <section className="py-12 sm:py-16 dark:bg-dark-secondary bg-light-secondary transition-colors duration-300">
@@ -32,6 +30,7 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
             <div className="relative">
               <img src={tour.image} alt={tour.title} className="w-full h-72 sm:h-96 object-cover" />
 
+              {/*
               <div className="absolute top-4 left-4 flex gap-2">
                 {discount > 0 && (
                   <div className="dark:bg-white dark:text-dark bg-dark text-white px-4 py-2 rounded-lg font-bold">
@@ -39,6 +38,7 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
                   </div>
                 )}
               </div>
+              */}
             </div>
 
             <div className="p-6 sm:p-8">
@@ -103,6 +103,7 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
                 </div>
               </div>
 
+              {/*
               <div className="dark:bg-dark-lighter bg-light-accent rounded-lg p-6 mb-8">
                 <h3 className="font-display text-2xl dark:text-white text-text-light font-bold mb-6">
                   Pricing Breakdown
@@ -147,6 +148,7 @@ export default function TourDetail({ tour, onBack }: TourDetailProps) {
                   </ul>
                 </div>
               </div>
+              */}
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <button

@@ -76,7 +76,6 @@ export default function Tours({ onSelectTour }: ToursProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {tours.map((tour) => {
-              const discount = Math.round(((tour.originalPrice - tour.priceValue) / tour.originalPrice) * 100);
               return (
                 <div
                   key={tour.id}
@@ -90,11 +89,13 @@ export default function Tours({ onSelectTour }: ToursProps) {
                       className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 dark:bg-gradient-dark bg-gradient-light opacity-40"></div>
+                    {/*
                     {discount > 0 && (
                       <div className="absolute top-4 right-4 dark:bg-white dark:text-dark bg-dark text-white px-3 py-1 rounded-lg font-bold text-sm">
                         SAVE {discount}%
                       </div>
                     )}
+                    */}
                   </div>
 
                   <div className="p-6">
@@ -113,6 +114,7 @@ export default function Tours({ onSelectTour }: ToursProps) {
 
                     <p className="dark:text-text-muted text-text-light-muted mb-6 text-sm">{tour.description}</p>
 
+                    {/*
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-xl font-bold dark:text-white text-text-light">KES {tour.priceValue.toLocaleString()}</span>
                       {discount > 0 && (
@@ -121,6 +123,7 @@ export default function Tours({ onSelectTour }: ToursProps) {
                         </span>
                       )}
                     </div>
+                    */}
 
                     <button
                       onClick={(e) => {
